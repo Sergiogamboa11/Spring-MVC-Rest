@@ -30,4 +30,8 @@ public class EventService {
 		eventDao.deleteById(id);
 	}
 	
+	public boolean existsById(int id) {
+		return eventDao.existsById(id);
+	}
+	
 }

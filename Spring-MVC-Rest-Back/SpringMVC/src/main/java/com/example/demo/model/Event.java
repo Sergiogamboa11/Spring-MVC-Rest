@@ -1,10 +1,12 @@
 package com.example.demo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,7 +15,7 @@ public class Event {
 
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private int eventId;
 	
 	@Column
@@ -28,24 +30,29 @@ public class Event {
 	@Column
 	private String time;
 	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "manager_id")
+    private Manager manager;
+	
 	public Event() {
 	}
 
-	public Event(int eventId, String name, String location, String date, String time) {
-		super();
-		this.eventId = eventId;
-		this.name = name;
-		this.location = location;
-		this.date = date;
-		this.time = time;
-	}
+//	public Event(int eventId, String name, String location, String date, String time) {
+//		super();
+//		this.eventId = eventId;
+//		this.name = name;
+//		this.location = location;
+//		this.date = date;
+//		this.time = time;
+//	}
 
-	public Event(String name, String location, String date, String time) {
+	public Event(String name, String location, String date, String time, Manager manager) {
 		super();
 		this.name = name;
 		this.location = location;
 		this.date = date;
 		this.time = time;
+		this.manager = manager;
 	}
 
 	public int getEventId() {
@@ -88,10 +95,18 @@ public class Event {
 		this.time = time;
 	}
 
+	public Manager getManager() {
+		return manager;
+	}
+
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+
 	@Override
 	public String toString() {
 		return "Event [eventId=" + eventId + ", name=" + name + ", location=" + location + ", date=" + date + ", time="
-				+ time + "]";
+				+ time + ", manager=" + manager + "]";
 	}
 	
 }

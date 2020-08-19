@@ -5,11 +5,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Manager {
@@ -21,8 +24,9 @@ public class Manager {
 	@Column
 	private String name;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="manager_id")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="manager_id", insertable=false, updatable=false)
+	@JsonIgnore
 	private List<Event> event;
 	
 	public Manager() {
@@ -67,7 +71,7 @@ public class Manager {
 
 	@Override
 	public String toString() {
-		return "Manager [managerId=" + managerId + ", name=" + name + ", Event=" + event + "]";
+		return "Manager [managerId=" + managerId + ", name=" + name + "]";
 	}
 	
 }
